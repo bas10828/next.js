@@ -24,6 +24,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styles from './page.module.css'; // Import CSS module for general styles
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
+import * as XLSX from 'xlsx';
 
 // Define the styled TextField using MUI's styled function
 const CustomTextField = styled(TextField)({
@@ -64,10 +65,10 @@ export default function FindDeviceNumber() {
     if (!loggedIn) {
       setIsLoggedIn(false);
       window.location.href = "/";
-    }else {
-      setIsLoggedIn(true);      
+    } else {
+      setIsLoggedIn(true);
     }
-    
+
     const storedPriority = localStorage.getItem('priority');
     if (storedPriority) {
       setPriority(storedPriority);
@@ -136,6 +137,13 @@ export default function FindDeviceNumber() {
   const handleSelectChange = (event) => {
     setSearchType(event.target.value);
     setSearchValue(''); // Clear previous search value when changing search type
+  };
+
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    XLSX.writeFile(workbook, 'exported_data.xlsx');
   };
 
   const handleDelete = async (id) => {
@@ -250,6 +258,9 @@ export default function FindDeviceNumber() {
             Search
           </Button>
         </Box>
+        <Button className={styles.customButton} onClick={handleExportExcel}>
+          export excel
+        </Button>
         <Button type="button" variant="contained" color="primary" onClick={toggleDrawer(true)} startIcon={<AddIcon />} className={styles['cart-button']}>
           Cart ({cart.length})
         </Button>
