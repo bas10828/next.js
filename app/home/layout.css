@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+  }
+  .main-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .table-container {
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .table {
+    width: 100%;
+  }
+  
+  .logout-button {
+    background-color: #96f924; /* สีเหลืองสด */
+    color: #2c3e50; /* สีน้ำเงินเข้ม */
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logout-button:hover {
+    background-color: #f6e58d; /* สีเหลืองอ่อน */
+    transform: scale(1.05);
+  }
+  
+  .logout-button:active {
+    background-color: #f39c12; /* สีเหลืองเข้ม */
+  }

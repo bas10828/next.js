@@ -1,0 +1,35 @@
+/* page.module.css */
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 70px;
+}
+
+.paper {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.heading {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.textField {
+  margin-bottom: 15px;
+}
+
+.submitButton {
+  margin-top: 20px;
+  background-color: #1976d2;
+  color: #fff;
+  &:hover {
+    background-color: #115293;
+  }
+}
+
+.drawerForm {
+  width: 250px;
+  padding: 20px;
+}

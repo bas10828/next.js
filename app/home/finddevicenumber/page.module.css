@@ -1,0 +1,93 @@
+/* C:\Users\kanta\Desktop\Dev\NEXT.js\my-appv2\app\home\finddevicenumber\page.module.css */
+
+.fullscreen-container {
+  width: 100%;
+  padding: 65px;
+  margin: 0;
+}
+
+.table-container {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #0099cc; /* เพิ่มเส้นขอบ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border: 1px solid #0099cc; /* เพิ่มเส้นขอบ */
+  text-align: left;
+}
+
+.table th {
+  background-color: #00bfff; /* สีพื้นหลังส่วนหัวของตาราง */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff; /* สีตัวอักษร */
+  text-transform: uppercase; /* ตัวอักษรเป็นตัวพิมพ์ใหญ่ */
+}
+
+.table td {
+  font-size: 0.875rem;
+  color: #003366; /* สีตัวอักษร */
+}
+
+.table tr:nth-of-type(even) {
+  background-color: #e0f7ff; /* สีพื้นหลังสำหรับแถวคู่ */
+}
+
+.table tr:nth-of-type(odd) {
+  background-color: #b3e5fc; /* สีพื้นหลังสำหรับแถวคี่ */
+}
+
+.table tr:hover {
+  background-color: #80d8ff; /* สีพื้นหลังเมื่อ hover */
+}
+
+.table tr:active {
+  background-color: #4fc3f7; /* สีพื้นหลังเมื่อคลิก */
+}
+
+.fullscreen-container h4 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: #007acc; /* สีตัวอักษรสำหรับหัวเรื่อง */
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap; /* ใช้ flex-wrap เพื่อให้รวมขอบกระดาน */
+  gap: 16px; /* ระยะห่างระหว่างองค์ประกอบ */
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.input {
+  /* flex: 1; ให้ input ขยายตามพื้นที่ที่เหลือ */
+  width: 500px;
+}
+
+.button {
+  background-color: #0099cc;
+  color: #fff;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #007acc;
+}
+
+.select-input {
+  flex: 1; /* ให้ select ขยายตามพื้นที่ที่เหลือ */
+}
+
+.select-label {
+  margin-top: 8px; /* ระยะห่างด้านบนของ label */
+}
