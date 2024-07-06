@@ -16,7 +16,11 @@ import styles from './page.module.css';
 import Link from 'next/link';
 
 const fetchData = () => {
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/instock`)
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/instock`, {
+    headers: {
+      'loggedIn': localStorage.getItem('isLoggedIn') === 'true' ? 'true' : 'false'
+    }
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');

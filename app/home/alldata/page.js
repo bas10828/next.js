@@ -16,7 +16,11 @@ import * as XLSX from 'xlsx';
 import styles from './page.module.css';
 
 const fetchData = () => {
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/data`)
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/data`, {
+    headers: {
+      'loggedIn': localStorage.getItem('isLoggedIn') === 'true' ? 'true' : 'false'
+    }
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
@@ -123,7 +127,7 @@ const Alldata = () => {
   return (
     <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
       <TableContainer component={Paper} className={styles['table-container']}>
-        
+
         {priority === 'admin' || priority === 'user' ? (
           <Button className={styles.customButton} onClick={exportToExcel}>
             export excel

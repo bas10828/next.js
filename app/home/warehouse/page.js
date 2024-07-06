@@ -42,7 +42,11 @@ const Waerhouse = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mywaerhouse`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mywaerhouse`, {
+        headers: {
+          'loggedIn': localStorage.getItem('isLoggedIn') === 'true' ? 'true' : 'false'
+        }
+      })
         .then(response => {
           if (!response.ok) {
             throw new Error('Failed to fetch data');
@@ -104,22 +108,17 @@ const Waerhouse = () => {
           <TableHead>
             <TableRow>
               <TableCell>ยี่ห้อ</TableCell>
-              <TableCell>โมเดล</TableCell>
-              <TableCell>จำนวนอุปกรณ์ทั้งหมด</TableCell>
+              <TableCell>โมเดล</TableCell>              
               <TableCell>จำนวนอุปกรณ์ที่ยังอยู่ในคลัง</TableCell>
               <TableCell>จำนวนอุปกรณ์ที่ขายแล้ว</TableCell>
+              <TableCell>จำนวนอุปกรณ์ทั้งหมด</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map(equipment => (
               <TableRow key={generateKey()}>
                 <TableCell>{equipment.brand}</TableCell>
-                <TableCell>{equipment.model}</TableCell>
-                <TableCell>
-                  <Link href={`/home/warehouse/${equipment.model}/allmodel`} passHref>
-                    {equipment.total_model}
-                  </Link>
-                </TableCell>
+                <TableCell>{equipment.model}</TableCell>                
                 <TableCell>
                   <Link href={`/home/warehouse/${equipment.model}/instock`} passHref>
                     {equipment.in_stock}
@@ -128,6 +127,11 @@ const Waerhouse = () => {
                 <TableCell>
                   <Link href={`/home/warehouse/${equipment.model}/soldout`} passHref>
                     {equipment.sold_out}
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Link href={`/home/warehouse/${equipment.model}/allmodel`} passHref>
+                    {equipment.total_model}
                   </Link>
                 </TableCell>
               </TableRow>

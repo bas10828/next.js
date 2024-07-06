@@ -17,7 +17,11 @@ import * as XLSX from 'xlsx';
 import styles from './page.module.css';
 
 const fetchData = () => {
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/soldout`)
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/soldout`, {
+    headers: {
+      'loggedIn': localStorage.getItem('isLoggedIn') === 'true' ? 'true' : 'false'
+    }
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
@@ -36,8 +40,8 @@ const Page = () => {
     if (!loggedIn) {
       setIsLoggedIn(false);
       window.location.href = "/";
-    }else {
-      setIsLoggedIn(true);      
+    } else {
+      setIsLoggedIn(true);
     }
     const storedPriority = localStorage.getItem('priority');
     if (storedPriority) {

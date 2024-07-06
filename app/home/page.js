@@ -1,3 +1,4 @@
+// C:\Users\kanta\Desktop\Dev\test_app_next\app\home\page.js
 "use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -14,7 +15,11 @@ import {
 import styles from './page.module.css';
 
 export function getData() {
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/myproject`)
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/myproject`, {
+    headers: {
+      'loggedIn': localStorage.getItem('isLoggedIn') === 'true' ? 'true' : 'false'
+    }
+  })
     .then(res => {
       if (!res.ok) {
         throw new Error('Failed to fetch data');

@@ -17,7 +17,11 @@ import {
 import styles from './page.module.css';
 
 const fetchData = () => {
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`)
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
+    headers: {
+      'loggedIn': localStorage.getItem('isLoggedIn') === 'true' ? 'true' : 'false'
+    }
+  })
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
