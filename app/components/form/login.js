@@ -7,6 +7,7 @@ export function Login() {
     const [error, setError] = useState('');
     const username = React.useRef(null);
     const password = React.useRef(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const loggedIn = localStorage.getItem("isLoggedIn");
@@ -56,7 +57,20 @@ export function Login() {
                 <h2>Login</h2>
                 {error && <div className="error-message">{error}</div>}
                 <input type="text" ref={username} placeholder="Username" />
-                <input type="password" ref={password} placeholder="Password" />
+                <input
+                    type={showPassword ? "text" : "password"}
+                    ref={password}
+                    placeholder="Password"
+                />
+                <div>
+                    <input
+                        type="checkbox"
+                        id="showPassword"
+                        checked={showPassword}
+                        onChange={() => setShowPassword(!showPassword)}
+                    />
+                    <label htmlFor="showPassword">Show Password</label>
+                </div>
                 <button type="submit">Login</button>
             </form>
         </div>

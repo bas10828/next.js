@@ -152,6 +152,12 @@ export default function CreateProjectPage() {
     }
   }, [isFormSubmitted]);
 
+  const preventEnterKeySubmit = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   if (!isLoggedIn) {
     return null; // or any other non-form content like a login prompt
   }
@@ -183,7 +189,7 @@ export default function CreateProjectPage() {
               name="proid"
               value={formData.proid}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -194,7 +200,7 @@ export default function CreateProjectPage() {
               name="brand"
               value={formData.brand}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -205,7 +211,7 @@ export default function CreateProjectPage() {
               name="model"
               value={formData.model}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -216,7 +222,7 @@ export default function CreateProjectPage() {
               name="serial"
               value={formData.serial}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -227,7 +233,7 @@ export default function CreateProjectPage() {
               name="mac"
               value={formData.mac}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <FormControl fullWidth variant="outlined" margin="normal" className={styles.textField}>
@@ -236,6 +242,7 @@ export default function CreateProjectPage() {
                 label="Status Stock"
                 name="status_stock"
                 value={formData.status_stock}
+                onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
                 onChange={handleChange}
               >
                 <MenuItem value="in stock">In Stock</MenuItem>
@@ -251,6 +258,7 @@ export default function CreateProjectPage() {
               name="into_stock"
               value={formData.into_stock}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               InputLabelProps={{
                 shrink: true,
               }}
@@ -258,7 +266,7 @@ export default function CreateProjectPage() {
                 // Date format mask for DD/MM/YYYY
                 pattern: '\\d{2}/\\d{2}/\\d{4}',
               }}
-
+              required
               className={styles.textField}
             />
             <TextField
@@ -270,6 +278,7 @@ export default function CreateProjectPage() {
               name="out_stock"
               value={formData.out_stock}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               InputLabelProps={{
                 shrink: true,
               }}
@@ -289,7 +298,7 @@ export default function CreateProjectPage() {
               name="price"
               value={formData.price}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
 
@@ -301,7 +310,7 @@ export default function CreateProjectPage() {
               name="purchase"
               value={formData.purchase}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
 
@@ -313,7 +322,7 @@ export default function CreateProjectPage() {
               name="project"
               value={formData.project}
               onChange={handleChange}
-
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -325,6 +334,7 @@ export default function CreateProjectPage() {
               name="repeat"
               value={repeat}
               onChange={handleRepeatChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               required
               className={styles.textField}
             />

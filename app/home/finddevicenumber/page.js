@@ -25,6 +25,7 @@ import styles from './page.module.css'; // Import CSS module for general styles
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import * as XLSX from 'xlsx';
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 
 // Define the styled TextField using MUI's styled function
 const CustomTextField = styled(TextField)({
@@ -58,7 +59,7 @@ export default function FindDeviceNumber() {
   const [project, setProject] = useState('');
   const [statusStock, setStatusStock] = useState('sold out');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [commentCounts, setCommentCounts] = useState([]);
   useEffect(() => {
 
     const loggedIn = localStorage.getItem('isLoggedIn');
@@ -83,6 +84,31 @@ export default function FindDeviceNumber() {
     }
   }, [cart]);
 
+  // Function to fetch comment count from API for each row in data
+  const fetchCommentCounts = async () => {
+    try {
+      const counts = [];
+
+      for (const equipment of data) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/comment/countcomment/${equipment.serial}`);
+        if (!res.ok) {
+          throw new Error(`Failed to fetch comment count for serial: ${equipment.serial}`);
+        }
+        const result = await res.json();
+        counts.push(result[0]?.count || 0);
+      }
+
+      setCommentCounts(counts);
+    } catch (error) {
+      console.error('Error fetching comment counts:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchCommentCounts(); // Call the function to fetch comment counts
+  }, [data]);
+
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
   };
@@ -94,6 +120,9 @@ export default function FindDeviceNumber() {
       return;
     }
     setError('');
+
+    // Reset commentCounts to empty array when submitting new search
+    setCommentCounts([]);
 
     let apiUrl = '';
 
@@ -302,7 +331,15 @@ export default function FindDeviceNumber() {
                 <TableCell>{equipment.proid}</TableCell>
                 <TableCell>{equipment.brand}</TableCell>
                 <TableCell>{equipment.model}</TableCell>
-                <TableCell>{equipment.serial}</TableCell>
+                <TableCell>
+                  {equipment.serial}
+                  <Link href={`/home/comment/${equipment.serial}`} passHref>
+                    <IconButton size="small">
+                      <CommentOutlinedIcon />
+                      {commentCounts[data.indexOf(equipment)] || 0}
+                    </IconButton>
+                  </Link>
+                </TableCell>
                 <TableCell>{equipment.mac}</TableCell>
                 <TableCell>{equipment.price}</TableCell>
                 <TableCell>{equipment.purchase}</TableCell>

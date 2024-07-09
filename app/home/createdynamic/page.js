@@ -62,6 +62,7 @@ export default function CreateProjectDynamicPage() {
           value={menuFormData.proid}
           onChange={handleMenuInputChange}
           required
+          onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
         />
         <Button type="submit" variant="contained" color="primary" className={styles.submitButton}>
           Submit
@@ -171,6 +172,12 @@ export default function CreateProjectDynamicPage() {
     setAdditionalFields(updatedFields);
   };
 
+  const preventEnterKeySubmit = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   if (!isLoggedIn) {
     return null; // or any other non-form content like a login prompt
   }
@@ -202,6 +209,7 @@ export default function CreateProjectDynamicPage() {
               name="proid"
               value={formData.proid}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -212,6 +220,7 @@ export default function CreateProjectDynamicPage() {
               name="brand"
               value={formData.brand}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -222,6 +231,7 @@ export default function CreateProjectDynamicPage() {
               name="model"
               value={formData.model}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -232,6 +242,7 @@ export default function CreateProjectDynamicPage() {
               name="serial"
               value={formData.serial}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
 
@@ -243,6 +254,7 @@ export default function CreateProjectDynamicPage() {
               name="mac"
               value={formData.mac}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
 
@@ -253,6 +265,7 @@ export default function CreateProjectDynamicPage() {
                 name="status_stock"
                 value={formData.status_stock}
                 onChange={handleChange}
+                onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               >
                 <MenuItem value="in stock">In Stock</MenuItem>
                 <MenuItem value="sold out">Sold Out</MenuItem>
@@ -273,6 +286,8 @@ export default function CreateProjectDynamicPage() {
               inputProps={{
                 pattern: '\\d{4}-\\d{2}-\\d{2}',
               }}
+              required
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -290,6 +305,7 @@ export default function CreateProjectDynamicPage() {
               inputProps={{
                 pattern: '\\d{4}-\\d{2}-\\d{2}',
               }}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -301,6 +317,7 @@ export default function CreateProjectDynamicPage() {
               name="price"
               value={formData.price}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -311,6 +328,7 @@ export default function CreateProjectDynamicPage() {
               name="purchase"
               value={formData.purchase}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
             <TextField
@@ -321,6 +339,7 @@ export default function CreateProjectDynamicPage() {
               name="project"
               value={formData.project}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
             />
 
@@ -335,6 +354,7 @@ export default function CreateProjectDynamicPage() {
                   name={`serial-${index}`}
                   value={field.serial}
                   onChange={(e) => handleAdditionalFieldChange(e, index, 'serial')}
+                  onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
                   className={styles.textField}
                 />
                 <TextField
@@ -345,6 +365,7 @@ export default function CreateProjectDynamicPage() {
                   name={`mac-${index}`}
                   value={field.mac}
                   onChange={(e) => handleAdditionalFieldChange(e, index, 'mac')}
+                  onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
                   className={styles.textField}
                 />
                 <IconButton onClick={() => handleRemoveField(index)} className={styles.removeButton}>

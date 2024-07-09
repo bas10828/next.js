@@ -155,6 +155,11 @@ export default function CreateProjectPage({ params }) {
     }
   }, [isFormSubmitted, project]);
 
+  const preventEnterKeySubmit = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
   if (!isLoggedIn) {
     return null; // or any other non-form content like a login prompt
   }
@@ -186,6 +191,7 @@ export default function CreateProjectPage({ params }) {
               name="proid"
               value={formData.proid}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <TextField
@@ -196,6 +202,7 @@ export default function CreateProjectPage({ params }) {
               name="brand"
               value={formData.brand}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <TextField
@@ -206,6 +213,7 @@ export default function CreateProjectPage({ params }) {
               name="model"
               value={formData.model}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <TextField
@@ -216,6 +224,7 @@ export default function CreateProjectPage({ params }) {
               name="serial"
               value={formData.serial}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <TextField
@@ -226,6 +235,7 @@ export default function CreateProjectPage({ params }) {
               name="mac"
               value={formData.mac}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <FormControl fullWidth variant="outlined" margin="normal" className={styles.textField}>
@@ -235,6 +245,7 @@ export default function CreateProjectPage({ params }) {
                 name="status_stock"
                 value={formData.status_stock}
                 onChange={handleChange}
+                onKeyDown={preventEnterKeySubmit}
               >
                 <MenuItem value="in stock">In Stock</MenuItem>
                 <MenuItem value="sold out">Sold Out</MenuItem>
@@ -249,6 +260,7 @@ export default function CreateProjectPage({ params }) {
               name="into_stock"
               value={formData.into_stock}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -257,6 +269,7 @@ export default function CreateProjectPage({ params }) {
                 pattern: '\\d{2}/\\d{2}/\\d{4}',
               }}
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth
@@ -267,6 +280,7 @@ export default function CreateProjectPage({ params }) {
               name="out_stock"
               value={formData.out_stock}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -285,6 +299,7 @@ export default function CreateProjectPage({ params }) {
               name="price"
               value={formData.price}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <TextField
@@ -295,6 +310,7 @@ export default function CreateProjectPage({ params }) {
               name="purchase"
               value={formData.purchase}
               onChange={handleChange}
+              onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
             />
             <TextField
@@ -306,6 +322,7 @@ export default function CreateProjectPage({ params }) {
               name="repeat"
               value={repeat}
               onChange={handleRepeatChange}
+              onKeyDown={preventEnterKeySubmit}
               required
               className={styles.textField}
             />
