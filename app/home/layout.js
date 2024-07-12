@@ -111,6 +111,7 @@ export default function Layout({ children  }) {
               'Createdynamic',
               'Warehouse',
               'FindDeviceNumber',
+              'WorkSchedule',
               'Instock',
               'Soldout',
               'Alldata'
