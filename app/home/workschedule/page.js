@@ -167,8 +167,8 @@ const handleFindDetailDrawerOpen = () => {
       timestamp: moment(equipment.timestamp).tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss'),
       user: equipment.user,
       project: equipment.project,
-      date_start: formatDate(equipment.date_start),
-      date_end: formatDate(equipment.date_end),
+      date_start: (equipment.date_start),
+      date_end: (equipment.date_end),
       details: equipment.details,
     })));
 

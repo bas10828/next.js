@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback  } from 'react';
 import {
   Table,
   TableBody,
@@ -85,29 +85,37 @@ export default function FindDeviceNumber() {
   }, [cart]);
 
   // Function to fetch comment count from API for each row in data
-  const fetchCommentCounts = async () => {
+  const fetchCommentCounts = useCallback(async () => {
     try {
       const counts = [];
 
       for (const equipment of data) {
+        if (!equipment.serial) {
+          counts.push("olo");
+          continue; // ข้ามไปยัง iteration ถัดไป
+        }
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/comment/countcomment/${equipment.serial}`);
         if (!res.ok) {
           throw new Error(`Failed to fetch comment count for serial: ${equipment.serial}`);
         }
         const result = await res.json();
-        counts.push(result[0]?.count || 0);
+        counts.push(result[0].count || 0);
       }
 
       setCommentCounts(counts);
     } catch (error) {
       console.error('Error fetching comment counts:', error);
     }
-  };
+  },[data]);
+
 
 
   useEffect(() => {
-    fetchCommentCounts(); // Call the function to fetch comment counts
-  }, [data]);
+    if (data.length > 0) {
+      fetchCommentCounts(); // Call the function to fetch comment counts only when data changes
+    }
+  }, [data, fetchCommentCounts]);
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
@@ -333,12 +341,15 @@ export default function FindDeviceNumber() {
                 <TableCell>{equipment.model}</TableCell>
                 <TableCell>
                   {equipment.serial}
-                  <Link href={`/home/comment/${equipment.serial}`} passHref>
-                    <IconButton size="small">
-                      <CommentOutlinedIcon />
-                      {commentCounts[data.indexOf(equipment)] || 0}
-                    </IconButton>
-                  </Link>
+                  {commentCounts[data.indexOf(equipment)] !== 'olo' ? (
+                    <Link href={`/home/comment/${equipment.serial}`} passHref>
+                      <IconButton size="small">
+                        <CommentOutlinedIcon />
+                        {commentCounts[data.indexOf(equipment)]}
+                      </IconButton>
+                    </Link>
+                  ) : null}
+
                 </TableCell>
                 <TableCell>{equipment.mac}</TableCell>
                 <TableCell>{equipment.price}</TableCell>
