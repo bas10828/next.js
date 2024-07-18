@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback  } from 'react';
 import {
   Table,
   TableBody,
@@ -99,27 +99,27 @@ const Page = () => {
       });
   }, [displayType]);
 
-  const handleFindDrawerOpen = () => {
+  const handleFindDrawerOpen = useCallback(() => {
     setIsFindDrawerOpen(true);
-  };
+  }, []);
 
-  const handleFindDrawerClose = () => {
+  const handleFindDrawerClose = useCallback(() => {
     setIsFindDrawerOpen(false);
-  };
+  }, []);
 
-const handleFindDetailDrawerOpen = () => {
-  setIsFindDetailsDrawerOpen(true);
-  };
+  const handleFindDetailDrawerOpen = useCallback(() => {
+    setIsFindDetailsDrawerOpen(true);
+  }, []);
 
-  const handleFindDetailsDrawerClose = () => {
+  const handleFindDetailsDrawerClose = useCallback(() => {
     setIsFindDetailsDrawerOpen(false);
-  };
-  
-  const handleFindDateChange = (event) => {
-    setFindDate(event.target.value);
-  };
+  }, []);
 
-  const handleFindSubmit = async () => {
+  const handleFindDateChange = useCallback((event) => {
+    setFindDate(event.target.value);
+  }, []);
+
+  const handleFindSubmit = useCallback(async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/finddate/${findDate}`);
       if (!response.ok) {
@@ -137,15 +137,15 @@ const handleFindDetailDrawerOpen = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+  }, [findDate]);
 
-  const handleFindDetailsSubmit = async () => {
+  const handleFindDetailsSubmit = useCallback(async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/finddetail/${findDetails}`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-  
+
       const fetchedData = await response.json();
       setData(fetchedData.map(item => ({
         ...item,
@@ -157,9 +157,9 @@ const handleFindDetailDrawerOpen = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
-  
-  
+  }, [findDetails]);
+
+
 
   const exportToExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(data.map(equipment => ({
@@ -192,7 +192,7 @@ const handleFindDetailDrawerOpen = () => {
   };
 
 
-  const handleDelete = async (id) => {
+  const handleDelete = useCallback(async (id) => {
     if (window.confirm('ต้องการลบรายการนี้?')) {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/schedule/delete/${id}`, {
@@ -208,17 +208,19 @@ const handleFindDetailDrawerOpen = () => {
         console.error('Error deleting data:', error);
       }
     }
-  };
+  }, [data]);
 
-  const handleDrawerOpen = (editData = null) => {
+  const handleDrawerOpen = useCallback((editData = null) => {
     if (editData) {
       setEditMode(true);
       setCurrentEditData(editData);
       setFormData({
         details: editData.details,
         project: editData.project,
-        date_start: moment(editData.date_start).format('YYYY-MM-DD'), // ปรับให้เป็น ISO 8601
-        date_end: moment(editData.date_end).format('YYYY-MM-DD'), // ปรับให้เป็น ISO 8601
+        date_start: moment(editData.date_start, 'DD/MM/YYYY').isValid() ? moment(editData.date_start, 'DD/MM/YYYY').format('YYYY-MM-DD') : '', // ปรับให้เป็น ISO 8601
+        date_end: moment(editData.date_end, 'DD/MM/YYYY').isValid() ? moment(editData.date_end, 'DD/MM/YYYY').format('YYYY-MM-DD') : '', // ปรับให้เป็น ISO 8601
+        // date_start: moment(editData.date_start).format('YYYY-MM-DD'), // ปรับให้เป็น ISO 8601
+        // date_end: moment(editData.date_end).format('YYYY-MM-DD'), // ปรับให้เป็น ISO 8601
         user: localStorage.getItem('username') || ''
       });
     } else {
@@ -232,32 +234,32 @@ const handleFindDetailDrawerOpen = () => {
       });
     }
     setIsDrawerOpen(true);
-  };
+  }, []);
 
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = useCallback(() => {
     setIsDrawerOpen(false);
     setCurrentEditData(null);
-  };
+    setFormData({
+      details: '',
+      project: '',
+      date_start: '',
+      date_end: '',
+      user: ''
+    });
+  }, []);
 
-  
 
-  const handleInputChange = (e) => {
+
+  const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
     if (name === 'date_start' || name === 'date_end') {
-      // Ensure the value is in YYYY-MM-DD format
-      const formattedDate = moment(value, 'YYYY-MM-DD').format('YYYY-MM-DD');
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: formattedDate
-      }));
+      const formattedValue = moment(value).format('YYYY-MM-DD');
+      setFormData({ ...formData, [name]: formattedValue });
     } else {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value
-      }));
+      setFormData({ ...formData, [name]: value });
     }
-  };
+  }, [formData]);
 
 
   const handleSubmit = async () => {
@@ -290,6 +292,11 @@ const handleFindDetailDrawerOpen = () => {
     }
   };
 
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem('isLoggedIn');
+    window.location.href = "/";
+  }, []);
+
   if (!isLoggedIn) {
     return null; // or any other non-form content like a login prompt
   }
@@ -306,21 +313,27 @@ const handleFindDetailDrawerOpen = () => {
       // Handle error state if needed
     }
   };
+  console.log("dataform ",formData)
 
 
   return (
     <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
       <TableContainer component={Paper} className={styles['table-container']}>
-        {priority === 'admin' || priority === 'user' ? (
-          <div className={styles['button-container']}>
-            <Button onClick={() => handleDisplayChange({ target: { value: 'today' } })}>Today</Button>
-            <Button onClick={() => handleDisplayChange({ target: { value: 'all' } })}>All</Button>
-            <Button onClick={handleFindDrawerOpen}>Find Month/Year</Button>
-            <Button onClick={handleFindDetailDrawerOpen}>Find Details</Button>            <Button onClick={() => handleDrawerOpen()} >Add</Button>
-            <Button onClick={exportToExcel}>Export Excel</Button>
-          </div>
-        ) : null}
+        <div className={styles['button-container']}>
+          <Button onClick={() => handleDisplayChange({ target: { value: 'today' } })}>Today</Button>
+          <Button onClick={() => handleDisplayChange({ target: { value: 'all' } })}>All</Button>
+          <Button onClick={handleFindDrawerOpen}>Find Month/Year</Button>
+          <Button onClick={handleFindDetailDrawerOpen}>Find Details</Button>
 
+          {priority === 'admin' || priority === 'user' ? (
+            // <div className={styles['button-container']}>
+            <>
+              <Button onClick={() => handleDrawerOpen()} >Add</Button>
+              <Button onClick={exportToExcel}>Export Excel</Button>
+            </>
+            // </div>
+          ) : null}
+        </div>
         <Table className={styles.table}>
           <TableHead>
             <TableRow>
@@ -334,6 +347,10 @@ const handleFindDetailDrawerOpen = () => {
               {priority === 'user' || priority === 'admin' ? (
                 <>
                   <TableCell>Edit</TableCell>
+                </>
+              ) : null}
+              {priority === 'admin' ? (
+                <>
                   <TableCell>Delete</TableCell>
                 </>
               ) : null}
@@ -356,6 +373,11 @@ const handleFindDetailDrawerOpen = () => {
                         Edit
                       </Button>
                     </TableCell>
+
+                  </>
+                ) : null}
+                {priority === 'admin' ? (
+                  <>
                     <TableCell>
                       <Button variant="contained" color="secondary" onClick={() => handleDelete(equipment.id)}>
                         Delete
@@ -370,6 +392,14 @@ const handleFindDetailDrawerOpen = () => {
       </TableContainer>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <Box sx={{ width: 300, padding: '16px' }}>
+        <TextField
+            label="id"
+            name="id"
+            value={formData.id}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
           <TextField
             label="Details"
             name="details"

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect,useCallback  } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Table,
   TableBody,
@@ -107,7 +107,7 @@ export default function FindDeviceNumber() {
     } catch (error) {
       console.error('Error fetching comment counts:', error);
     }
-  },[data]);
+  }, [data]);
 
 
 
