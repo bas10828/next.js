@@ -392,14 +392,7 @@ const Page = () => {
       </TableContainer>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <Box sx={{ width: 300, padding: '16px' }}>
-        <TextField
-            label="id"
-            name="id"
-            value={formData.id}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-          />
+        
           <TextField
             label="Details"
             name="details"
