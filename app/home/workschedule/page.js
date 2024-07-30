@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState,useCallback  } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Table,
   TableBody,
@@ -117,7 +117,7 @@ const Page = () => {
 
   const handleFindDateChange = useCallback((event) => {
     setFindDate(event.target.value);
-  }, []);
+  }, [setFindDate]);
 
   const handleFindSubmit = useCallback(async () => {
     try {
@@ -137,7 +137,7 @@ const Page = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }, [findDate]);
+  }, [findDate, handleFindDrawerClose]);
 
   const handleFindDetailsSubmit = useCallback(async () => {
     try {
@@ -153,11 +153,11 @@ const Page = () => {
         date_start: formatDate(item.date_start),
         date_end: formatDate(item.date_end),
       })));
-      handleFindDrawerClose();
+      handleFindDetailsDrawerClose();
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }, [findDetails]);
+  }, [findDetails, handleFindDetailsDrawerClose]);
 
 
 
@@ -313,7 +313,7 @@ const Page = () => {
       // Handle error state if needed
     }
   };
-  console.log("dataform ",formData)
+  // console.log("dataform ", formData)
 
 
   return (
@@ -392,7 +392,7 @@ const Page = () => {
       </TableContainer>
       <Drawer anchor="right" open={isDrawerOpen} onClose={handleDrawerClose}>
         <Box sx={{ width: 300, padding: '16px' }}>
-        
+
           <TextField
             label="Details"
             name="details"
@@ -400,6 +400,9 @@ const Page = () => {
             onChange={handleInputChange}
             fullWidth
             margin="normal"
+            required
+            multiline
+            rows={3}
           />
           <TextField
             label="Project"
@@ -448,7 +451,7 @@ const Page = () => {
             <Button variant="contained" color="primary" onClick={handleSubmit}>
               {editMode ? 'Update' : 'Submit'}
             </Button>
-            <Button variant="outlined" onClick={handleDrawerClose}>
+            <Button variant="outlined" color="secondary" onClick={handleDrawerClose}>
               Cancel
             </Button>
           </Box>
@@ -472,7 +475,7 @@ const Page = () => {
             <Button variant="contained" color="primary" onClick={handleFindSubmit}>
               Submit
             </Button>
-            <Button variant="outlined" onClick={handleFindDrawerClose}>
+            <Button variant="outlined" color="secondary" onClick={handleFindDrawerClose}>
               Cancel
             </Button>
           </Box>
@@ -496,7 +499,7 @@ const Page = () => {
             <Button variant="contained" color="primary" onClick={handleFindDetailsSubmit}>
               Submit
             </Button>
-            <Button variant="outlined" onClick={handleFindDrawerClose}>
+            <Button variant="outlined" color="secondary" onClick={handleFindDetailsDrawerClose}>
               Cancel
             </Button>
           </Box>

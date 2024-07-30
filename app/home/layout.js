@@ -114,7 +114,8 @@ export default function Layout({ children  }) {
               'WorkSchedule',
               'Instock',
               'Soldout',
-              'Alldata'
+              'Alldata',
+              'Scanbarcode'
             ].map((text, index) => (
               <ListItemButton key={text} component={Link} href={`/home/${text.toLowerCase()}`} onClick={toggleDrawer(false)}>
                 <ListItemText primary={text} />

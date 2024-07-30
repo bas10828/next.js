@@ -211,6 +211,7 @@ export default function CreateProjectDynamicPage() {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth
@@ -222,6 +223,7 @@ export default function CreateProjectDynamicPage() {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth
@@ -244,6 +246,7 @@ export default function CreateProjectDynamicPage() {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
+              
             />
 
             <TextField
@@ -319,6 +322,7 @@ export default function CreateProjectDynamicPage() {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit} // Add onKeyDown event
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth

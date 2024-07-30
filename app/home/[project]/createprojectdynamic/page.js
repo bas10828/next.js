@@ -210,6 +210,7 @@ export default function CreateProjectPage({ params }) {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth
@@ -221,6 +222,7 @@ export default function CreateProjectPage({ params }) {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth
@@ -290,6 +292,7 @@ export default function CreateProjectPage({ params }) {
               onChange={handleChange}
               onKeyDown={preventEnterKeySubmit}
               className={styles.textField}
+              required
             />
             <TextField
               fullWidth
