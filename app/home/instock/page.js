@@ -9,7 +9,13 @@ import {
   TableRow,
   Paper,
   Box,
-  Button
+  Button,
+  TableSortLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
 } from '@mui/material';
 import * as XLSX from 'xlsx';
 import styles from './page.module.css';
@@ -33,21 +39,25 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [priority, setPriority] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [sortDirection, setSortDirection] = useState('asc'); // 'asc' หรือ 'desc'
+  const [sortBy, setSortBy] = useState('brand'); // 'brand' หรือ 'model'
+  const [sortedData, setSortedData] = useState([]);
+  const [filterColumn, setFilterColumn] = useState('brand'); // คอลัมน์ที่กรอง
+  const [filterValue, setFilterValue] = useState('');
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn');
     if (!loggedIn) {
       setIsLoggedIn(false);
       window.location.href = "/";
-    }else {
-      setIsLoggedIn(true);      
+    } else {
+      setIsLoggedIn(true);
     }
     const storedPriority = localStorage.getItem('priority');
     if (storedPriority) {
       setPriority(storedPriority);
     }
   }, []);
-
 
   useEffect(() => {
     fetchData()
@@ -56,12 +66,33 @@ const Page = () => {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        // Handle error state if needed
       });
   }, []);
 
+  useEffect(() => {
+    const filtered = data.filter(item => {
+      if (filterValue === '') return true;
+      return item[filterColumn].toString().toLowerCase().includes(filterValue.toLowerCase());
+    });
+
+    const sorted = filtered.sort((a, b) => {
+      if (sortBy === 'brand') {
+        return sortDirection === 'asc'
+          ? a.brand.localeCompare(b.brand)
+          : b.brand.localeCompare(a.brand);
+      } else if (sortBy === 'model') {
+        return sortDirection === 'asc'
+          ? a.model.localeCompare(b.model)
+          : b.model.localeCompare(a.model);
+      }
+      return 0;
+    });
+
+    setSortedData(sorted);
+  }, [sortDirection, sortBy, data, filterColumn, filterValue]);
+
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(data.map(equipment => ({
+    const worksheet = XLSX.utils.json_to_sheet(sortedData.map(equipment => ({
       ID: equipment.id,
       รหัสครุภัณฑ์: equipment.proid,
       BRAND: equipment.brand,
@@ -112,34 +143,95 @@ const Page = () => {
         }
 
         setData(data.filter(item => item.id !== id));
-        // window.location.reload();
       } catch (error) {
         console.error('Error deleting data:', error);
       }
     }
   };
 
+  const handleSort = (field) => {
+    if (field === sortBy) {
+      setSortDirection(prevDirection => (prevDirection === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortBy(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const handleFilterChange = (event) => {
+    setFilterValue(event.target.value);
+  };
+
+  const handleColumnChange = (event) => {
+    setFilterColumn(event.target.value);
+  };
+
   if (!isLoggedIn) {
-    return null; // or any other non-form content like a login prompt
+    return null;
   }
 
   return (
     <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
-      <TableContainer component={Paper} className={styles['table-container']}>
-      {priority === 'admin' || priority === 'user' ? (
-          <Button onClick={exportToExcel}>
-            export excel
+
+      <Box className={styles.filterContainer}>
+        <FormControl className={styles.filterControl}>
+          <InputLabel>Filter Column</InputLabel>
+          <Select
+            value={filterColumn}
+            onChange={handleColumnChange}
+            label="Filter Column"
+          >
+            <MenuItem value="proid">รหัสครุภัณฑ์</MenuItem>
+            <MenuItem value="brand">Brand</MenuItem>
+            <MenuItem value="model">Model</MenuItem>
+            <MenuItem value="serial">Serial</MenuItem>
+            <MenuItem value="mac">MAC</MenuItem>
+            <MenuItem value="purchase">ซื้อมาจาก</MenuItem>
+            <MenuItem value="project">โครงการ</MenuItem>
+            
+            {/* เพิ่มคอลัมน์อื่น ๆ ที่ต้องการกรอง */}
+          </Select>
+        </FormControl>
+        <TextField
+          className={styles.filterTextField}
+          label="Filter Value"
+          variant="outlined"
+          value={filterValue}
+          onChange={handleFilterChange}
+        />
+        {priority === 'admin' || priority === 'user' ? (
+          <Button className={styles.exportButton} onClick={exportToExcel}>
+            Export Excel
           </Button>
         ) : null}
+      </Box>
+
+      <TableContainer component={Paper} className={styles['table-container']}>
         <Table className={styles.table}>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>รหัสครุภัณฑ์</TableCell>
-              <TableCell>brand</TableCell>
-              <TableCell>model</TableCell>
-              <TableCell>serial</TableCell>
-              <TableCell>mac</TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortBy === 'brand'}
+                  direction={sortBy === 'brand' ? sortDirection : 'asc'}
+                  onClick={() => handleSort('brand')}
+                >
+                  Brand
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortBy === 'model'}
+                  direction={sortBy === 'model' ? sortDirection : 'asc'}
+                  onClick={() => handleSort('model')}
+                >
+                  Model
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>Serial</TableCell>
+              <TableCell>MAC</TableCell>
               <TableCell>ราคา</TableCell>
               <TableCell>ซื้อมาจาก</TableCell>
               <TableCell>Status</TableCell>
@@ -155,7 +247,7 @@ const Page = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map(equipment => (
+            {sortedData.map(equipment => (
               <TableRow key={equipment.id}>
                 <TableCell>{equipment.id}</TableCell>
                 <TableCell>{equipment.proid}</TableCell>
@@ -171,12 +263,12 @@ const Page = () => {
                 <TableCell>{equipment.project}</TableCell>
                 {priority === 'user' || priority === 'admin' ? (
                   <>
-                    <TableCell>
+                    <TableCell className={styles.tableCellButton}>
                       <Link href={`/home/instock/update/${equipment.id}`} passHref>
                         <Button variant="outlined">แก้ไข</Button>
                       </Link>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={styles.tableCellButton}>
                       <Button variant="outlined" color="error" onClick={() => handleDelete(equipment.id)}>
                         ลบ
                       </Button>

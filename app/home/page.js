@@ -10,7 +10,8 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Box
+  Box,
+  TextField
 } from '@mui/material';
 import styles from './page.module.css';
 
@@ -35,6 +36,8 @@ export function getData() {
 export default function Page() {
   const [data, setData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn');
@@ -49,12 +52,29 @@ export default function Page() {
     }
   }, []);
 
+  useEffect(() => {
+    const filtered = data.filter((equipment) =>
+      equipment.project.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    console.log("Filtered Data:", filtered); // ตรวจสอบข้อมูลที่กรองได้
+    setFilteredData(filtered);
+  }, [searchTerm, data]);
+
   if (!isLoggedIn) {
     return <p>กำลังตรวจสอบการเข้าสู่ระบบ...</p>;
   }
 
   return (
     <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
+      <TextField
+        label="ค้นหาโครงการ"
+        variant="outlined"
+        fullWidth
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className={styles['search-input']}
+        sx={{ marginBottom: '20px' }}
+      />
       <TableContainer component={Paper} className={styles['table-container']}>
         <Table className={styles.table}>
           <TableHead>
@@ -64,16 +84,24 @@ export default function Page() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((equipment) => (
-              <TableRow key={equipment.project} className={styles.tableRow}>
-                <TableCell>
-                  <Link href={`/home/${equipment.project}`} passHref>
-                    {equipment.project}
-                  </Link>
+            {filteredData.length > 0 ? (
+              filteredData.map((equipment) => (
+                <TableRow key={equipment.project} className={styles.tableRow}>
+                  <TableCell>
+                    <Link href={`/home/${equipment.project}`} passHref>
+                      {equipment.project}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{equipment.countproject}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={2} align="center">
+                  ไม่พบข้อมูล
                 </TableCell>
-                <TableCell>{equipment.countproject}</TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>

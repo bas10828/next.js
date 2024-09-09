@@ -1,54 +1,49 @@
-/* login.css */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f6f8fa;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .container {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 300px;
-    text-align: center;
-  }
-  
-  .container h1 {
-    margin-bottom: 20px;
-    color: #333333;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  form input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  form button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  form button:hover {
-    background-color: #45a049;
-  }
-  
+  background-color: #f0f0f0; /* พื้นหลังสีเทาอ่อน */
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.login-paper {
+  width: 400px;
+  background-color: #ffffff; /* สีพื้นหลังของกล่องล็อกอิน */
+  border-radius: 10px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-button {
+  background-color: #3f51b5; /* สีปุ่ม Login */
+  color: #ffffff;
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.login-button:hover {
+  background-color: #303f9f; /* สีปุ่มเมื่อ hover */
+}
+
+.show-password {
+  margin-top: 10px;
+}
+
+.error-message {
+  color: #f44336;
+  margin-bottom: 10px;
+  text-align: left;
+}

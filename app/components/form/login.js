@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react';
+import { Button, Checkbox, FormControlLabel, TextField, Typography, Paper, Box } from "@mui/material";
 import './login.css'; // เรียกใช้ไฟล์ CSS ที่สร้างขึ้น
 
 export function Login() {
@@ -53,26 +54,45 @@ export function Login() {
 
     return (
         <div className="login-container">
-            <form className="login-form" onSubmit={handleSubmit}>
-                <h2>Login</h2>
-                {error && <div className="error-message">{error}</div>}
-                <input type="text" ref={username} placeholder="Username" />
-                <input
-                    type={showPassword ? "text" : "password"}
-                    ref={password}
-                    placeholder="Password"
-                />
-                <div>
-                    <input
-                        type="checkbox"
-                        id="showPassword"
-                        checked={showPassword}
-                        onChange={() => setShowPassword(!showPassword)}
+        <Paper elevation={10} className="login-paper">
+            <Box p={3}>
+                <Typography variant="h4" gutterBottom>
+                    Login
+                </Typography>
+                {error && <Typography variant="body2" color="error">{error}</Typography>}
+                <form onSubmit={handleSubmit} className="login-form">
+                    <TextField
+                        inputRef={username}
+                        label="Username"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
                     />
-                    <label htmlFor="showPassword">Show Password</label>
-                </div>
-                <button type="submit">Login</button>
-            </form>
-        </div>
+                    <TextField
+                        inputRef={password}
+                        label="Password"
+                        type={showPassword ? "text" : "password"}
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                    />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)}
+                                color="primary"
+                            />
+                        }
+                        label="Show Password"
+                        className="show-password"
+                    />
+                    <Button type="submit" variant="contained" color="primary" fullWidth className="login-button">
+                        Login
+                    </Button>
+                </form>
+            </Box>
+        </Paper>
+    </div>
     );
 }

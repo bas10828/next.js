@@ -11,17 +11,21 @@ export async function GET(request) {
 
   const query = `
     SELECT 
-      brand,
-      model,
+      e.brand,
+      e.model,
       COUNT(*) AS total_model,
-      SUM(CASE WHEN status_stock = 'in stock' THEN 1 ELSE 0 END) AS in_stock,
-      SUM(CASE WHEN status_stock = 'sold out' THEN 1 ELSE 0 END) AS sold_out
+      SUM(CASE WHEN e.status_stock = 'in stock' THEN 1 ELSE 0 END) AS in_stock,
+      SUM(CASE WHEN e.status_stock = 'sold out' THEN 1 ELSE 0 END) AS sold_out,
+      l.device_type
     FROM 
-      equipment 
+      equipment e
+    LEFT JOIN 
+      library l ON e.model = l.model
     GROUP BY 
-      brand, model
+      e.brand, e.model, l.device_type
     ORDER BY 
-      brand DESC
+      e.brand DESC;
+
   `;
 
   try {

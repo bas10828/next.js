@@ -14,6 +14,7 @@ import {
   Box,
   Button
 } from '@mui/material';
+import Image from 'next/image';
 import * as XLSX from 'xlsx';
 import styles from './page.module.css'; // นำเข้าไฟล์ CSS ที่สร้างไว้
 
@@ -114,7 +115,7 @@ export default function ProjectPage({ params }) {
         <Table className={styles.table}>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              {/* <TableCell>ID</TableCell> */}
               <TableCell>รหัสครุภัณฑ์</TableCell>
               <TableCell>brand</TableCell>
               <TableCell>model</TableCell>
@@ -125,7 +126,8 @@ export default function ProjectPage({ params }) {
               <TableCell>Status</TableCell>
               <TableCell>วันซื้อ</TableCell>
               <TableCell>วันขาย</TableCell>
-              <TableCell>โครงการ</TableCell>
+              <TableCell>รูป</TableCell>
+              {/* <TableCell>โครงการ</TableCell> */}
               {priority === 'user' || priority === 'admin' ? (
                 <>
                   <TableCell>แก้ไข</TableCell>
@@ -137,7 +139,7 @@ export default function ProjectPage({ params }) {
           <TableBody>
             {data.map((equipment) => (
               <TableRow key={equipment.id}>
-                <TableCell>{equipment.id}</TableCell>
+                {/* <TableCell>{equipment.id}</TableCell> */}
                 <TableCell>{equipment.proid}</TableCell>
                 <TableCell>{equipment.brand}</TableCell>
                 <TableCell>{equipment.model}</TableCell>
@@ -148,7 +150,19 @@ export default function ProjectPage({ params }) {
                 <TableCell>{equipment.status_stock}</TableCell>
                 <TableCell>{equipment.into_stock}</TableCell>
                 <TableCell>{equipment.out_stock}</TableCell>
-                <TableCell>{equipment.project}</TableCell>
+                <TableCell>
+                  <Image
+                    src={`/devicepic/${equipment.model}.png`} // เรียกรูปตามชื่อ model
+                    alt={equipment.model}
+                    layout="intrinsic" // ปรับขนาดภาพตามสัดส่วนดั้งเดิม
+                    objectFit="contain" // ทำให้ภาพอยู่ในกรอบและไม่โดนบี้
+                    width={200} // กำหนดความกว้างสูงสุด 100px
+                    height={200} // กำหนดความสูงสูงสุด 100px
+                    className={styles.cardImage}
+                    // onClick={() => handleImageClick(`/devicepic/${equipment.model}.png`)}
+                  />
+                </TableCell>
+                {/* <TableCell>{equipment.project}</TableCell> */}
                 {priority === 'user' || priority === 'admin' ? (
                   <>
                     <TableCell>

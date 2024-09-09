@@ -1,60 +1,132 @@
+/* styles/page.module.css */
 .fullscreen-container {
-    width: 100%;
-    padding: 50px;
-    margin: 0;
+  width: 100%;
+  padding: 50px;
+  margin: 0;
+  background-color: #ccc6c6;
+  color: #ffffff;
+  border-radius: 12px; /* เพิ่มเส้นโค้งมุม */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* เพิ่มเงา */
+}
+
+@media (max-width: 600px) {
+  .fullscreen-container {
+    padding: 16px;
   }
-  
-  .table-container {
-    width: 100%;
-    margin-top: 16px;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 2px solid #0099cc; /* เพิ่มเส้นขอบ */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
-  }
-  
-  .table th, .table td {
-    padding: 12px 15px;
-    border: 1px solid #0099cc; /* เพิ่มเส้นขอบ */
-    text-align: left;
-  }
-  
-  .table th {
-    background-color: #00bfff; /* สีพื้นหลังส่วนหัวของตาราง */
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff; /* สีตัวอักษร */
-    text-transform: uppercase; /* ตัวอักษรเป็นตัวพิมพ์ใหญ่ */
-  }
-  
-  .table td {
-    font-size: 0.875rem;
-    color: #003366; /* สีตัวอักษร */
-  }
-  
-  .table tr:nth-of-type(even) {
-    background-color: #e0f7ff; /* สีพื้นหลังสำหรับแถวคู่ */
-  }
-  
-  .table tr:nth-of-type(odd) {
-    background-color: #b3e5fc; /* สีพื้นหลังสำหรับแถวคี่ */
-  }
-  
-  .table tr:hover {
-    background-color: #80d8ff; /* สีพื้นหลังเมื่อ hover */
-  }
-  
-  .table tr:active {
-    background-color: #4fc3f7; /* สีพื้นหลังเมื่อคลิก */
-  }
-  
-  .fullscreen-container h5 {
-    font-size: 1.5rem;
-    margin-bottom: 16px;
-    font-weight: bold;
-    color: #007acc; /* สีตัวอักษรสำหรับหัวเรื่อง */
-  }
-  
+}
+
+.table-container {
+  width: 100%;
+  margin-top: 16px;
+  background-color: #f9f9f9; /* สีพื้นหลังใหม่ */
+  border-radius: 12px; /* เพิ่มเส้นโค้งมุม */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff; /* พื้นหลังตาราง */
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd; /* เส้นแบ่งระหว่างแถว */
+  font-family: 'Poppins', sans-serif; /* ใช้ฟอนต์ใหม่ */
+}
+
+.table th {
+  background-color: #007acc;
+  color: #ffffff;
+  text-align: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table td {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.table tr:nth-of-type(even) {
+  background-color: #f2f2f2;
+}
+
+.table tr:nth-of-type(odd) {
+  background-color: #cceeff;
+}
+
+.table tr:hover {
+  background-color: #e6f7ff;
+  cursor: pointer; /* เพิ่มเคอร์เซอร์ */
+}
+
+.table tr:active {
+  background-color: #cceeff;
+}
+
+.tableCellButton {
+  text-align: center;
+}
+
+.tableCellButton .MuiButton-root {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  border-radius: 8px;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+.tableCellButton .MuiButton-root:hover {
+  background-color: #006bb3;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 107, 179, 0.3);
+}
+
+.fullscreen-container h5 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: #005ea5;
+}
+
+/* styles/filters.module.css */
+.filterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: #d9d3d3;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+}
+
+.filterControl {
+  min-width: 120px;
+  margin-right: 16px;
+}
+
+.filterTextField {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.exportButton {
+  background: linear-gradient(45deg, #808080, #999999); /* เพิ่ม Gradient */
+  color: #ffffff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* เพิ่ม Animation */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* เพิ่มเงา */
+}
+
+.exportButton:hover {
+  background: linear-gradient(45deg, #999999, #b3b3b3); /* เปลี่ยน Gradient เมื่อ hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* เพิ่มเงาเมื่อ hover */
+}
+
+.exportButton:active {
+  background: linear-gradient(45deg, #666666, #808080); /* เปลี่ยน Gradient เมื่อคลิก */
+}

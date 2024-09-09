@@ -14,7 +14,7 @@ export async function GET(request) {
 
   try {
     const [rows, fields] = await promisePool.query(
-      `SELECT project, COUNT(project) AS countproject FROM equipment GROUP BY project;`
+      `SELECT project, COUNT(project) AS countproject FROM equipment GROUP BY project ORDER BY project ASC;`
     );
     return NextResponse.json(rows);
   } catch (error) {

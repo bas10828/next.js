@@ -18,7 +18,7 @@ import * as XLSX from 'xlsx';
 import styles from './page.module.css'; // นำเข้าไฟล์ CSS ที่สร้างไว้
 
 function getData(model) {
-  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mywaerhouse/allmodel/${model}`)
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/mywarehouse/allmodel/${model}`)
     .then(res => {
       if (!res.ok) {
         throw new Error('Failed to fetch data');

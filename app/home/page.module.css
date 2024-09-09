@@ -1,61 +1,90 @@
+.search-input {
+  margin-bottom: 20px;
+}
+
 .fullscreen-container {
-    width: 100%;
-    padding: 50px;
-    margin: 0;
-  }
-  
-  .table-container {
-    width: 100%;
-    margin-top: 16px;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 2px solid #0099cc; /* เพิ่มเส้นขอบ */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
-  }
-  
-  .table th, .table td {
-    padding: 12px 15px;
-    border: 1px solid #0099cc; /* เพิ่มเส้นขอบ */
-    text-align: left;
-  }
-  
-  .table th {
-    background-color: #00bfff; /* สีพื้นหลังส่วนหัวของตาราง */
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff; /* สีตัวอักษร */
-    text-transform: uppercase; /* ตัวอักษรเป็นตัวพิมพ์ใหญ่ */
-  }
-  
-  .table td {
-    font-size: 0.875rem;
-    color: #003366; /* สีตัวอักษร */
-  }
-  
-  .table tr:nth-of-type(even) {
-    background-color: #e0f7ff; /* สีพื้นหลังสำหรับแถวคู่ */
-  }
-  
-  .table tr:nth-of-type(odd) {
-    background-color: #b3e5fc; /* สีพื้นหลังสำหรับแถวคี่ */
-  }
-  
-  .table tr:hover {
-    background-color: #80d8ff; /* สีพื้นหลังเมื่อ hover */
-  }
-  
-  .table tr:active {
-    background-color: #4fc3f7; /* สีพื้นหลังเมื่อคลิก */
-  }
-  
-  .fullscreen-container h5 {
-    font-size: 1.5rem;
-    margin-bottom: 16px;
-    font-weight: bold;
-    color: #007acc; /* สีตัวอักษรสำหรับหัวเรื่อง */
-  }
-  
-  
+  width: 100%;
+  padding: 60px;
+  margin: 0;
+  background: linear-gradient(to right, #f0f4f8, #d9e4ec);
+  /* เปลี่ยนสีพื้นหลังเป็น gradient */
+}
+
+.table-container {
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 12px;
+  /* เพิ่มความโค้งให้กับมุม */
+  overflow: hidden;
+  /* ซ่อนเนื้อหาเกินขอบ */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+  /* ลบเส้นขอบภายนอก */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  /* เพิ่มเงา */
+}
+
+.table th, .table td {
+  padding: 15px 20px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+
+.table th {
+  background-color: #4a90e2; /* สีพื้นหลังส่วนหัวของตาราง */
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff; /* สีตัวอักษร */
+  text-transform: uppercase;
+}
+
+.table td {
+  font-size: 1rem;
+  color: #34495e; /* สีตัวอักษร */
+}
+
+.table tr:nth-of-type(even) {
+  background-color: #f7f9fc; /* สีพื้นหลังสำหรับแถวคู่ */
+}
+
+.table tr:nth-of-type(odd) {
+  background-color: #ebeff3; /* สีพื้นหลังสำหรับแถวคี่ */
+}
+
+.table tr:hover {
+  background-color: #e1ecf4; /* สีพื้นหลังเมื่อ hover */
+}
+
+.table tr:active {
+  background-color: #d0e2f2; /* สีพื้นหลังเมื่อคลิก */
+}
+
+.fullscreen-container h5 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #2c3e50; /* สีตัวอักษรสำหรับหัวเรื่อง */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้ตัวอักษร */
+}
+
+.table td a {
+  text-decoration: none; /* ลบเส้นใต้ */
+  color: #2c3e50; /* สีตัวอักษร */
+  font-weight: bold;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  border-bottom: 2px solid transparent; /* เพิ่มเส้นใต้แบบโปร่งใส */
+}
+
+.table td a:hover {
+  color: #4a90e2; /* สีตัวอักษรเมื่อ hover */
+  border-bottom: 2px solid #4a90e2; /* เส้นใต้สีเดียวกันกับสีตัวอักษรเมื่อ hover */
+}
+
+.table td a:active {
+  color: #34495e; /* สีตัวอักษรเมื่อคลิก */
+  border-bottom: 2px solid #34495e; /* เส้นใต้สีเดียวกันกับสีตัวอักษรเมื่อคลิก */
+}

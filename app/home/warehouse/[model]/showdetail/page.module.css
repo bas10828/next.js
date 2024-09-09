@@ -1,0 +1,96 @@
+/* page.module.css */
+
+.fullscreen-container {
+  background: linear-gradient(135deg, #f0f4f8 0%, #e4e9f0 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.card {
+  max-width: 800px;
+  width: 100%;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cardImageContainer {
+  width: 100%;
+  max-height: 800px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: auto; /* ปรับความสูงอัตโนมัติ */
+  max-height: 100%; /* ให้ภาพไม่เกินความสูงของกรอบ */
+  object-fit: cover; /* ให้รูปภาพครอบคลุมกรอบ */
+  object-position: center; /* จัดตำแหน่งของภาพให้อยู่ตรงกลาง */
+}
+
+.cardContent {
+  padding: 20px;
+  background: #fff;
+  flex-grow: 1;
+}
+
+.cardTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cardSubtitle {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.cardText {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.7;
+}
+
+.buttonBack {
+  margin-top: 30px;
+}
+
+.buttonContained {
+  background-color: #007acc;
+  color: white;
+  border-radius: 30px;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.buttonContained:hover {
+  background-color: #005fa3;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.noData {
+  font-size: 22px;
+  color: #999;
+  margin-top: 50px;
+}

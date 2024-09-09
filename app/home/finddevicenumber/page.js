@@ -28,25 +28,33 @@ import * as XLSX from 'xlsx';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 
 // Define the styled TextField using MUI's styled function
-const CustomTextField = styled(TextField)({
+const CustomTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: '#007acc',
+      borderColor: theme.palette.primary.main,
     },
     '&:hover fieldset': {
-      borderColor: '#005f99',
+      borderColor: theme.palette.primary.dark,
     },
     '&.Mui-focused fieldset': {
-      borderColor: '#003f66',
+      borderColor: theme.palette.primary.main,
     },
   },
   '& .MuiInputLabel-outlined': {
-    color: '#007acc',
+    color: theme.palette.primary.main,
   },
   '& .MuiInputLabel-outlined.Mui-focused': {
-    color: '#003f66',
+    color: theme.palette.primary.dark,
   }
-});
+}));
+
+const CustomButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: '#fff',
+  '&:hover': {
+    backgroundColor: theme.palette.primary.dark,
+  },
+}));
 
 export default function FindDeviceNumber() {
   const [searchType, setSearchType] = useState('proid');
@@ -60,8 +68,8 @@ export default function FindDeviceNumber() {
   const [statusStock, setStatusStock] = useState('sold out');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [commentCounts, setCommentCounts] = useState([]);
+  
   useEffect(() => {
-
     const loggedIn = localStorage.getItem('isLoggedIn');
     if (!loggedIn) {
       setIsLoggedIn(false);
@@ -69,7 +77,6 @@ export default function FindDeviceNumber() {
     } else {
       setIsLoggedIn(true);
     }
-
     const storedPriority = localStorage.getItem('priority');
     if (storedPriority) {
       setPriority(storedPriority);
@@ -259,87 +266,93 @@ export default function FindDeviceNumber() {
   }
 
   return (
-    <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <Typography variant="h4" gutterBottom>
-          ค้นหาอุปกรณ์
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <FormControl variant="outlined" className={styles.input}>
-            <InputLabel id="search-type-label">ประเภทค้นหา</InputLabel>
-            <Select
-              labelId="search-type-label"
-              id="search-type-select"
-              value={searchType}
-              onChange={handleSelectChange}
-              label="ประเภทค้นหา"
-            >
-              <MenuItem value="proid">รหัสครุภัณฑ์</MenuItem>
-              <MenuItem value="brand">Brand</MenuItem>
-              <MenuItem value="model">Model</MenuItem>
-              <MenuItem value="serial">Serial</MenuItem>
-              <MenuItem value="purchase">Purchase</MenuItem>
-              <MenuItem value="project">Project</MenuItem>
-            </Select>
-          </FormControl>
-          <CustomTextField
-            label={`ค้นหาด้วย ${searchType === 'proid' ? 'รหัสครุภัณฑ์' : searchType.charAt(0).toUpperCase() + searchType.slice(1)}`}
-            value={searchValue}
-            onChange={handleInputChange}
-            variant="outlined"
-            margin="normal"
-            required
-            className={styles.input} // Use CSS module class for individual styling
-          />
-          <Button type="submit" variant="contained" color="primary" className={styles.button}>
-            Search
-          </Button>
-        </Box>
-        <Button className={styles.customButton} onClick={handleExportExcel}>
-          export excel
-        </Button>
-        <Button type="button" variant="contained" color="primary" onClick={toggleDrawer(true)} startIcon={<AddIcon />} className={styles['cart-button']}>
-          Cart ({cart.length})
-        </Button>
-      </form>
-      {error && (
-        <Typography color="error" sx={{ marginTop: '16px' }}>
-          {error}
-        </Typography>
-      )}
-      <TableContainer component={Paper} className={styles['table-container']} sx={{ marginTop: '32px' }}>
+    <>
+      <Box className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+
+          <Box className={styles.formControls}>
+            <Typography variant="h4" gutterBottom className={styles.title}>
+              ค้นหาอุปกรณ์
+            </Typography>
+            <FormControl variant="outlined" className={styles.input}>
+              <InputLabel id="search-type-label">ประเภทค้นหา</InputLabel>
+              <Select
+                labelId="search-type-label"
+                id="search-type-select"
+                value={searchType}
+                onChange={handleSelectChange}
+                label="ประเภทค้นหา"
+              >
+                <MenuItem value="proid">รหัสครุภัณฑ์</MenuItem>
+                <MenuItem value="brand">Brand</MenuItem>
+                <MenuItem value="model">Model</MenuItem>
+                <MenuItem value="serial">Serial</MenuItem>
+                <MenuItem value="purchase">Purchase</MenuItem>
+                <MenuItem value="project">Project</MenuItem>
+              </Select>
+            </FormControl>
+            <CustomTextField
+              label={`ค้นหาด้วย ${searchType === 'proid' ? 'รหัสครุภัณฑ์' : searchType.charAt(0).toUpperCase() + searchType.slice(1)}`}
+              value={searchValue}
+              onChange={handleInputChange}
+              variant="outlined"
+              margin="normal"
+              required
+              className={styles.input} // Use CSS module class for individual styling
+            />
+            <CustomButton type="submit">
+              Search
+            </CustomButton>
+
+            <CustomButton onClick={handleExportExcel}>
+              Export Excel
+            </CustomButton>
+            <CustomButton onClick={toggleDrawer(true)} startIcon={<AddIcon />} >
+              Cart ({cart.length})
+            </CustomButton>
+          </Box>
+
+        </form>
+        {error && (
+          <Typography color="error" className={styles.error}>
+            {error}
+          </Typography>
+        )}
+      </Box>
+
+      <TableContainer component={Paper} className={styles.tableContainer}>
         <Table className={styles.table}>
-          <TableHead>
+          <TableHead className={styles.tableHead}>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>รหัสครุภัณฑ์</TableCell>
-              <TableCell>Brand</TableCell>
-              <TableCell>Model</TableCell>
-              <TableCell>Serial</TableCell>
-              <TableCell>MAC</TableCell>
-              <TableCell>ราคา</TableCell>
-              <TableCell>ซื้อมาจาก</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>วันซื้อ</TableCell>
-              <TableCell>วันขาย</TableCell>
-              <TableCell>โครงการ</TableCell>
+              {/* <TableCell className={styles.tableCell}>ID</TableCell> */}
+              <TableCell className={styles.tableCell}>รหัสครุภัณฑ์</TableCell>
+              <TableCell className={styles.tableCell}>Brand</TableCell>
+              <TableCell className={styles.tableCell}>Model</TableCell>
+              <TableCell className={styles.tableCell}>Serial</TableCell>
+              <TableCell className={styles.tableCell}>MAC</TableCell>
+              <TableCell className={styles.tableCell}>ราคา</TableCell>
+              <TableCell className={styles.tableCell}>ซื้อมาจาก</TableCell>
+              <TableCell className={styles.tableCell}>Status</TableCell>
+              <TableCell className={styles.tableCell}>วันซื้อ</TableCell>
+              <TableCell className={styles.tableCell}>วันขาย</TableCell>
+              <TableCell className={styles.tableCell}>โครงการ</TableCell>
               {priority === 'user' || priority === 'admin' ? (
                 <>
-                  <TableCell>แก้ไข</TableCell>
-                  <TableCell>ลบ</TableCell>
-                  <TableCell>ADD</TableCell>
+                  <TableCell className={styles.tableCell}>แก้ไข</TableCell>
+                  <TableCell className={styles.tableCell}>ลบ</TableCell>
+                  <TableCell className={styles.tableCell}>ADD</TableCell>
                 </>
               ) : null}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className={styles.tableBody}>
             {data.map(equipment => (
-              <TableRow key={equipment.id}>
-                <TableCell>{equipment.id}</TableCell>
-                <TableCell>{equipment.proid}</TableCell>
-                <TableCell>{equipment.brand}</TableCell>
-                <TableCell>{equipment.model}</TableCell>
-                <TableCell>
+              <TableRow key={equipment.id} className={styles.tableRow}>
+                {/* <TableCell className={styles.tableCell}>{equipment.id}</TableCell> */}
+                <TableCell className={styles.tableCell}>{equipment.proid}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.brand}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.model}</TableCell>
+                <TableCell className={styles.tableCell}>
                   {equipment.serial}
                   {commentCounts[data.indexOf(equipment)] !== 'olo' ? (
                     <Link href={`/home/comment/${equipment.serial}`} passHref>
@@ -351,32 +364,32 @@ export default function FindDeviceNumber() {
                   ) : null}
 
                 </TableCell>
-                <TableCell>{equipment.mac}</TableCell>
-                <TableCell>{equipment.price}</TableCell>
-                <TableCell>{equipment.purchase}</TableCell>
-                <TableCell>{equipment.status_stock}</TableCell>
-                <TableCell>{equipment.into_stock}</TableCell>
-                <TableCell>{equipment.out_stock}</TableCell>
-                <TableCell>{equipment.project}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.mac}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.price}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.purchase}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.status_stock}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.into_stock}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.out_stock}</TableCell>
+                <TableCell className={styles.tableCell}>{equipment.project}</TableCell>
                 {priority === 'user' || priority === 'admin' ? (
                   <>
-                    <TableCell>
+                    <TableCell className={styles.tableCell}>
                       <Link href={`/home/finddevicenumber/update/${equipment.id}`} passHref>
-                        <Button variant="outlined">แก้ไข</Button>
+                        <Button className={`${styles.button} ${styles.buttonedit}`} variant="outlined">แก้ไข</Button>
                       </Link>
                     </TableCell>
-                    <TableCell>
-                      <Button variant="outlined" color="error" onClick={() => handleDelete(equipment.id)}>
+                    <TableCell className={styles.tableCell}>
+                      <Button className={`${styles.button} ${styles.buttondel}`} variant="outlined" onClick={() => handleDelete(equipment.id)}>
                         ลบ
                       </Button>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className={styles.tableCell}>
                       {cart.some(item => item.id === equipment.id) ? (
-                        <IconButton color="secondary" onClick={() => removeFromCart(equipment.id)}>
+                        <IconButton className={`${styles.iconButton} ${styles.buttondel}`} onClick={() => removeFromCart(equipment.id)}>
                           <DeleteIcon />
                         </IconButton>
                       ) : (
-                        <IconButton color="primary" onClick={() => addToCart(equipment)}>
+                        <IconButton className={`${styles.iconButton} ${styles.buttonadd}`} onClick={() => addToCart(equipment)}>
                           <AddIcon />
                         </IconButton>
                       )}
@@ -388,6 +401,7 @@ export default function FindDeviceNumber() {
           </TableBody>
         </Table>
       </TableContainer>
+
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box sx={{ width: 350, padding: '16px' }}>
           <Typography variant="h5" gutterBottom>
@@ -457,6 +471,6 @@ export default function FindDeviceNumber() {
           )}
         </Box>
       </Drawer>
-    </Box>
+    </>
   );
 }

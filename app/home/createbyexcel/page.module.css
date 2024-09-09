@@ -1,0 +1,66 @@
+/* styles.css */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.table-header {
+  background-color: #f5f5f5;
+}
+
+.table-cell {
+  padding: 8px;
+  
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer-content {
+  padding: 16px;
+}
+
+.submit-button {
+  margin-top: 20px;
+}
+
+.tableContainer {
+  width: 100%; /* ให้ TableContainer ใช้ความกว้างเต็มที่ */
+  overflow-x: auto; /* ทำให้มี scroll bar ถ้าตารางกว้างเกิน */
+}
+
+.table {
+  min-width: 1000px; /* กำหนดความกว้างขั้นต่ำของตาราง */
+}
+
+.tableCell {
+  padding: 8px; /* เพิ่ม padding ให้เซลล์ */
+  white-space: nowrap; /* ป้องกันไม่ให้ข้อความห่อ */
+  overflow: hidden; /* ซ่อนข้อความที่ยาวเกิน */
+  text-overflow: ellipsis; /* เพิ่ม ... สำหรับข้อความที่ยาวเกิน */
+}
+
+.tableCellInput {
+  width: 100%; /* ใช้ความกว้างเต็มที่ของเซลล์ */
+  box-sizing: border-box; /* รวม padding และ border ในขนาด */
+}
+
+@media (max-width: 768px) {
+  .table {
+    min-width: 600px; /* ปรับความกว้างขั้นต่ำสำหรับหน้าจอเล็ก */
+  }
+}
+
+
+
+
+
+
+
+
+
+

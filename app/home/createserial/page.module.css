@@ -1,0 +1,171 @@
+/* CreateSerial.module.css */
+
+.headerContainer {
+  background-color: #f0f4f8; /* เปลี่ยนเป็นสีพื้นหลังอ่อน */
+  padding: 70px;
+  border-radius: 8px;
+}
+
+.searchButton {
+  background: linear-gradient(45deg, #f57c00, #ffca28); /* เพิ่ม gradient */
+  color: white;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: 10px 20px;
+  transition: transform 0.3s ease;
+}
+
+.searchButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(255, 105, 135, .4);
+}
+
+.headerTitle {
+  font-family: "Merriweather", serif; /* ใช้ฟอนต์หรูหรา */
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+
+
+.container {
+  background-color: #ffffff; /* สีพื้นหลังขาวสำหรับ container */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.table {
+  min-width: 600px; /* Ensure table has a minimum width */
+  border-collapse: collapse; /* Remove space between borders */
+}
+
+.formField {
+  margin-bottom: 16px;
+}
+
+.submitButton {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border-radius: 25px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  transition: transform 0.3s ease;
+}
+
+.submitButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 150, 0, .4);
+}
+
+.tableContainer {
+  margin-top: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.tableCell {
+  padding: 8px;
+  text-align: left;
+  border: 1px solid #ddd; /* Light border for better visibility */
+}
+
+.drawer {
+  padding: 20px;
+  width: 300px; /* Adjust width if needed */
+}
+
+.tableCellInput {
+  width: 100%;
+  box-sizing: border-box; /* Ensure input fits well inside cell */
+  font-size: 0.875rem; /* Adjust font size */
+}
+
+.tableCellSelect {
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.deleteButton {
+  color: red; /* Red color for the icon */
+  &:hover {
+    background-color: rgba(255, 0, 0, 0.1); /* Light red background on hover */
+  }
+}
+
+.formContainer {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping to keep items in one line */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+
+.formField {
+  flex: 1; /* Allow each field to grow equally */
+  min-width: 120px; /* Ensure fields are wide enough */
+  margin-right: 8px; /* Space between fields */
+}
+
+.textField, .formControl {
+  width: 100%; /* Ensure full width of text fields and select controls */
+}
+
+.drawerBox {
+  width: 300px;
+  padding: 20px;
+  background-color: #1E1E2F;
+  color: #FFFFFF;
+}
+
+.drawerTitle {
+  font-family: "Georgia, serif";
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.drawerInputLabel {
+  color: #BBBBBB;
+}
+
+.drawerDivider {
+  background-color: #444;
+  margin-bottom: 20px;
+}
+
+.drawerTextField {
+  background-color: #2C2C3A;
+  color: #FFFFFF;
+  border-radius: 8px;
+}
+
+.drawerButton {
+  background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+  color: #FFFFFF;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  box-shadow: 0px 3px 5px 2px rgba(255, 105, 135, .3);
+}
+
+.recordButton {
+  background-color: #c2185b; /* สีปุ่มบันทึกข้อมูล */
+  color: #ffffff;
+  &:hover {
+    background-color: #8c0032;
+  }
+}
+
+@media (max-width: 600px) {
+  .formField {
+    min-width: 80px; /* Adjust width for very small screens */
+  }
+}
+
+@media (max-width: 1200px) {
+  .formField {
+    min-width: 100px; /* Adjust width for smaller screens */
+  }
+}
