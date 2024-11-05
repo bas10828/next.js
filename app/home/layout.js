@@ -117,7 +117,8 @@ export default function Layout({ children  }) {
             'WorkSchedule',
             'Instock',
             'Soldout',
-            'Alldata'
+            'Alldata',
+            'GenerateReport'
           ].map((text) => (
             <ListItemButton key={text} component={Link} href={`/home/${text.toLowerCase()}`}>
               <ListItemText primary={text} />

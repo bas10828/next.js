@@ -65,46 +65,49 @@ export default function Page() {
   }
 
   return (
-    <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
-      <TextField
-        label="ค้นหาโครงการ"
-        variant="outlined"
-        fullWidth
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className={styles['search-input']}
-        sx={{ marginBottom: '20px' }}
-      />
-      <TableContainer component={Paper} className={styles['table-container']}>
-        <Table className={styles.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>โครงการ</TableCell>
-              <TableCell>จำนวนอุปกรณ์</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredData.length > 0 ? (
-              filteredData.map((equipment) => (
-                <TableRow key={equipment.project} className={styles.tableRow}>
-                  <TableCell>
-                    <Link href={`/home/${equipment.project}`} passHref>
-                      {equipment.project}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{equipment.countproject}</TableCell>
-                </TableRow>
-              ))
-            ) : (
+    <div className="container-fluid mt-5"> {/* Bootstrap container */}
+      <Box sx={{ width: '100%', padding: '16px' }} className={styles['fullscreen-container']}>
+        <h5>ค้นหาโครงการ</h5>
+        <TextField
+          label="ค้นหาโครงการ"
+          variant="outlined"
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles['search-input']}
+          sx={{ marginBottom: '20px' }}
+        />
+        <TableContainer component={Paper} className={styles['table-container']}>
+          <Table className={styles.table}>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={2} align="center">
-                  ไม่พบข้อมูล
-                </TableCell>
+                <TableCell>โครงการ</TableCell>
+                <TableCell>จำนวนอุปกรณ์</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+            </TableHead>
+            <TableBody>
+              {filteredData.length > 0 ? (
+                filteredData.map((equipment) => (
+                  <TableRow key={equipment.project} className={styles.tableRow}>
+                    <TableCell>
+                      <Link href={`/home/${equipment.project}`} passHref>
+                        {equipment.project}
+                      </Link>
+                    </TableCell>
+                    <TableCell>{equipment.countproject}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={2} align="center">
+                    ไม่พบข้อมูล
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </div>
   );
 }
