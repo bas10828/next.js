@@ -53,12 +53,13 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    const filtered = data.filter((equipment) =>
+    const filtered = data.filter((equipment) => 
+      equipment.project && // ตรวจสอบว่า equipment.project มีค่า
       equipment.project.toLowerCase().includes(searchTerm.toLowerCase())
     );
     console.log("Filtered Data:", filtered); // ตรวจสอบข้อมูลที่กรองได้
     setFilteredData(filtered);
-  }, [searchTerm, data]);
+  }, [data, searchTerm]);
 
   if (!isLoggedIn) {
     return <p>กำลังตรวจสอบการเข้าสู่ระบบ...</p>;
